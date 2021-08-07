@@ -4,7 +4,8 @@
 
 - post register
   - ~~testという文字列をとりあえず返す。~~
-  - postリクエストとバリデーション
+  - ~~postリクエストとバリデーション~~
+  - ユーザーを作成する（レジスター）
 - post login
 - post logout
 - get user
