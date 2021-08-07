@@ -3,7 +3,8 @@
 ## admin
 
 - post register
-  - test という文字列をとりあえず返す。
+  - ~~testという文字列をとりあえず返す。~~
+  - postリクエストとバリデーション
 - post login
 - post logout
 - get user
