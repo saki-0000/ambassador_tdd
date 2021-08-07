@@ -18,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/admin/regester', [AuthController::class, 'register']);
+Route::prefix('admin')->group(function () {
+    Route::post('/regester', [AuthController::class, 'register']);
+});

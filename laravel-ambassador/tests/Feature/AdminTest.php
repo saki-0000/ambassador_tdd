@@ -15,9 +15,6 @@ class AdminTest extends TestCase
     public function test_レジスター()
     {
         $response = $this->post('/admin/regester');
-
-        dump($response);
-
         $response->assertJson(['test']);
         $response->assertStatus(200);
     }
