@@ -14,7 +14,13 @@ class AdminTest extends TestCase
      */
     public function test_レジスター()
     {
-        $response = $this->post('/admin/regester');
+        $response = $this->post('/admin/regester', [
+            'first_name' => 'a',
+            'last_name' => 'a',
+            'email' => 'test@test.com',
+            'password' => 'a',
+            'password_confirm' => 'a',
+        ]);
         $response->assertJson(['test']);
         $response->assertStatus(200);
     }
