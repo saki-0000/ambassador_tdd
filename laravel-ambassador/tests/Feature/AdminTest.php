@@ -7,21 +7,24 @@ use Tests\TestCase;
 
 class AdminTest extends TestCase
 {
+    use RefreshDatabase;
     /**
-     * A basic test example.
+     * 登録時に返却されるユーザーが正しいか
      *
      * @return void
      */
     public function test_レジスター()
     {
-        $response = $this->post('/admin/regester', [
+        $data = [
             'first_name' => 'a',
             'last_name' => 'a',
             'email' => 'test@test.com',
+        ];
+        $response = $this->post('/admin/regester', $data + [
             'password' => 'a',
             'password_confirm' => 'a',
         ]);
-        $response->assertJson(['test']);
-        $response->assertStatus(200);
+        $response->assertJsonFragment($data + ['is_admin' => 1]);
+        $response->assertStatus(201);
     }
 }
