@@ -6,6 +6,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -47,8 +48,20 @@ class AuthController extends Controller
      * @param RegisterRequest $request
      * @return void
      */
-    public function user(Request $request)
+    public function user()
     {
         return auth()->user();
+    }
+
+    /**
+     * ログアウトします。
+     *
+     * @param RegisterRequest $request
+     * @return void
+     */
+    public function logout()
+    {
+        Cookie::forget('jwt');
+        return;
     }
 }
