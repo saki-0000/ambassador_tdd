@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -15,10 +16,11 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        return User::create($request->only([
+        $user = User::create($request->only([
             'first_name', 'last_name', 'email'
         ]) + [
             'password' => 'a', 'is_admin' => 1
         ]);
+        return response($user, Response::HTTP_CREATED);
     }
 }
