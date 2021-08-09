@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -21,5 +22,19 @@ class AuthController extends Controller
         ]) + [
             'password' => 'a', 'is_admin' => 1
         ]);
+    }
+
+    /**
+     * 与えられた情報をもとにログインします。
+     *
+     * @param RegisterRequest $request
+     * @return void
+     */
+    public function login(Request $request)
+    {
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            throw new Exception("invalid credentials", 1);
+        }
+        return auth()->user();
     }
 }

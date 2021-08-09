@@ -20,4 +20,5 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::post('/regester', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 });
