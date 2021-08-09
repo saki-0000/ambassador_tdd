@@ -11,6 +11,7 @@ class AdminTest extends TestCase
     use RefreshDatabase;
     public function test_登録したユーザーが返却されること()
     {
+        // $user = User::factory()->make();
         $response = $this->postJson('/admin/regester', [
             'first_name' => 'a',
             'last_name' => 'a',
