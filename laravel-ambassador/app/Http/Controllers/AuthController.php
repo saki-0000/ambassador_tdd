@@ -40,4 +40,15 @@ class AuthController extends Controller
 
         return response(['message' => 'success'])->cookie('jwt', $token, 60 * 24);
     }
+
+    /**
+     * 与えられた情報をもとにログインします。
+     *
+     * @param RegisterRequest $request
+     * @return void
+     */
+    public function user(Request $request)
+    {
+        return auth()->user();
+    }
 }

@@ -24,7 +24,9 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertCookie('jwt');
-        $this->assertAuthenticated();
+
+        // TODO：Bearerトークンがセットされるかどうかのテストの方法がわからない
+        // $response->assertHeader('Authorization');
         $response->assertOk();
     }
     /**
