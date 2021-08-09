@@ -16,11 +16,10 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        $user = User::create($request->only([
+        return User::create($request->only([
             'first_name', 'last_name', 'email'
         ]) + [
             'password' => 'a', 'is_admin' => 1
         ]);
-        return response($user, Response::HTTP_CREATED);
     }
 }
