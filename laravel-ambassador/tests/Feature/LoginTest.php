@@ -23,7 +23,7 @@ class LoginTest extends TestCase
             'password' => 'password',
         ]);
 
-        // TODO：：JWTトークンのテスト
+        $response->assertCookie('jwt');
         $this->assertAuthenticated();
         $response->assertOk();
     }
@@ -40,6 +40,7 @@ class LoginTest extends TestCase
             'password' => 'password',
         ]);
 
+        $response->assertCookieMissing('jwt');
         $response->assertStatus(401);
         $this->assertGuest();
     }
