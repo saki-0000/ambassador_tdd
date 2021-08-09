@@ -37,4 +37,20 @@ class LoginTest extends TestCase
         $this->assertAuthenticated();
         $response->assertOk();
     }
+    /**
+     *
+     * @return void
+     */
+    public function test_ログインできない()
+    {
+        $user = User::factory()->make();
+
+        $response = $this->postJson('/admin/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(401);
+        $this->assertGuest();
+    }
 }
