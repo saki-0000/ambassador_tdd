@@ -12,7 +12,7 @@ class AdminTest extends TestCase
     public function test_登録したユーザーが返却されること()
     {
         // $user = User::factory()->make();
-        $response = $this->postJson('/api/admin/regester', [
+        $response = $this->postJson('/api/admin/register', [
             'first_name' => 'a',
             'last_name' => 'a',
             'email' => 'test@test.com',
@@ -37,7 +37,7 @@ class AdminTest extends TestCase
      */
     public function test_バリデーションエラーが出ること()
     {
-        $response = $this->postJson('/api/admin/regester', [
+        $response = $this->postJson('/api/admin/register', [
             'first_name' => null,
             'last_name' => null,
             'email' => 'a',
