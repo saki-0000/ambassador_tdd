@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -22,7 +23,7 @@ class AuthController extends Controller
         return User::create($request->only([
             'first_name', 'last_name', 'email'
         ]) + [
-            'password' => 'a', 'is_admin' => 1
+            'password' => Hash::make($request->password), 'is_admin' => 1
         ]);
     }
 
