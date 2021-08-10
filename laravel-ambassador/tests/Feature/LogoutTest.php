@@ -22,13 +22,13 @@ class LogoutTest extends TestCase
         //     $user,
         //     ['*']
         // );
-        $response = $this->postJson('/admin/login', [
+        $response = $this->postJson('/api/admin/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
         $response->assertCookie('jwt');
 
-        $response = $this->getJson('/admin/logout');
+        $response = $this->getJson('/api/admin/logout');
         $response->assertCookieMissing('jwt');
         $response->assertOk();
     }

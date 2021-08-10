@@ -22,12 +22,12 @@ class userTest extends TestCase
         //     $user,
         //     ['*']
         // );
-        $response = $this->postJson('/admin/login', [
+        $response = $this->postJson('/api/admin/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
 
-        $response = $this->getJson('/admin/user');
+        $response = $this->getJson('/api/admin/user');
 
         $response
             ->assertJson(
