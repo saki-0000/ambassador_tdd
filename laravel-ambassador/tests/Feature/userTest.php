@@ -18,17 +18,14 @@ class userTest extends TestCase
     public function test_認証済みユーザーの情報が返ってくる()
     {
         $user = User::factory()->create();
-        // Sanctum::actingAs(
-        //     $user,
-        //     ['*']
-        // );
-        $response = $this->postJson('/api/admin/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
+        Sanctum::actingAs(
+            $user,
+            ['*']
+        );
 
         $response = $this->getJson('/api/admin/user');
 
+        $response->assertOk();
         $response
             ->assertJson(
                 fn (AssertableJson $json) =>
@@ -39,7 +36,5 @@ class userTest extends TestCase
                     ->missing('password')
                     ->etc()
             );
-
-        $response->assertOk();
     }
 }

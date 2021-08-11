@@ -18,15 +18,10 @@ class LogoutTest extends TestCase
     public function test_認証済みユーザーのがそうでなくなる()
     {
         $user = User::factory()->create();
-        // Sanctum::actingAs(
-        //     $user,
-        //     ['*']
-        // );
-        $response = $this->postJson('/api/admin/login', [
-            'email' => $user->email,
-            'password' => 'password',
-        ]);
-        $response->assertCookie('jwt');
+        Sanctum::actingAs(
+            $user,
+            ['*']
+        );
 
         $response = $this->getJson('/api/admin/logout');
         $response->assertCookieMissing('jwt');

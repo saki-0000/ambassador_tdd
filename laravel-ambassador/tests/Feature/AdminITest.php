@@ -14,7 +14,7 @@ class AdminITest extends TestCase
      *
      * @return void
      */
-    public function test_ログイン()
+    public function test_レジスターからログアウトまで()
     {
         $user = User::factory()->make();
 
@@ -26,11 +26,20 @@ class AdminITest extends TestCase
         ]) + ['password_confirm' => $user->password]);
         $response->assertStatus(201);
 
+        $userModel = User::firstWhere('email', $user->email);
+        dump($userModel);
+
+        // ログイン前なので認証エラー
+        $response = $this->getJson('/api/admin/user');
+        $response->assertStatus(401);
+
         $response = $this->postJson('/api/admin/login', [
             'email' => $user->email,
             'password' => $user->password,
         ]);
         $response->assertOk();
+
+        dump($userModel->fresh()->tokens);
 
         $response = $this->getJson('/api/admin/user');
         $response->assertOk();
