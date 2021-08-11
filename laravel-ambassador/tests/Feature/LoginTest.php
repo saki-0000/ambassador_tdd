@@ -22,12 +22,15 @@ class LoginTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
         ]);
+        $response->assertOk();
+
+        $userModel = User::firstWhere('email', $user->email);
+        $this->assertTrue($userModel->tokens->first()->abilities[0] === 'admin');
 
         $response->assertCookie('jwt');
 
         // TODO：Bearerトークンがセットされるかどうかのテストの方法がわからない
         // $response->assertHeader('Authorization');
-        $response->assertOk();
     }
     /**
      *

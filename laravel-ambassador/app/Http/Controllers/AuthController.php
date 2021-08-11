@@ -38,7 +38,7 @@ class AuthController extends Controller
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response(['invalid credentials'], Response::HTTP_UNAUTHORIZED);
         }
-        $token = auth()->user()->createToken('token')->plainTextToken;
+        $token = auth()->user()->createToken('token', ['admin'])->plainTextToken;
 
         $cookie = cookie('jwt', $token, 60 * 24);
         return response(['message' => 'success'])->withCookie($cookie);

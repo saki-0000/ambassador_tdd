@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('admin')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum', 'scope.admin'])->group(function () {
         Route::get('/user', [AuthController::class, 'user']);
         Route::get('/logout', [AuthController::class, 'logout']);
     });
