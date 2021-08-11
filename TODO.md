@@ -9,6 +9,7 @@
 - post login
   - ~~ログインできる~~
   - ~~クッキーにJWTトークンを登録する。~~
+  - 今後に備えadmin専用のトークンを発行する。（ambassadorではなく）
 - post logout
   - 認証ユーザーがそうではなくなりたい
 - get user
