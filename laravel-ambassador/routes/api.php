@@ -25,5 +25,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/user', [AuthController::class, 'user']);
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/users/info', [AuthController::class, 'updateInfo']);
+        Route::post('/users/password', [AuthController::class, 'updatePassword']);
     });
 });

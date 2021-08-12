@@ -9,6 +9,11 @@ use Tests\TestCase;
 class AdminTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * パスワードはログインしてみないと分からないので結合にて
+     * @return void
+     */
     public function test_登録したユーザーが返却されること()
     {
         // $user = User::factory()->make();

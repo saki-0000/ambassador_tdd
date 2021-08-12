@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateInfoRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +70,7 @@ class AuthController extends Controller
     }
 
     /**
-     * 与えられた情報をもとにログインします。
+     * 与えられた情報をもとにユーザー情報を更新します。
      *
      * @param RegisterRequest $request
      * @return void
@@ -78,6 +79,20 @@ class AuthController extends Controller
     {
         $user = $request->user();
         $user->update($request->only('first_name', 'last_name', 'email'));
+
+        return $user;
+    }
+
+    /**
+     * 与えられた情報をもとにパスワードを更新します。
+     *
+     * @param RegisterRequest $request
+     * @return void
+     */
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        $user = $request->user();
+        $user->update(['password' => Hash::make($request->password)]);
 
         return $user;
     }
