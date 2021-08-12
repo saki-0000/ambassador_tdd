@@ -1,6 +1,4 @@
 ## ambassador
-- index 
-  - ~~アンバサダーを取得する~~
 
 ## admin
 
@@ -10,5 +8,9 @@
   - 認証ユーザーがそうではなくなりたい
 - get user
   - ヘッダの認証のところがテストしたい、、、。
+- get ambassadors
+  - ~~アンバサダーを取得する~~
+- productsのCRUD
+  - CRUDできる
 
 ## checkout
