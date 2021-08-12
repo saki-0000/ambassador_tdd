@@ -1,4 +1,6 @@
 ## ambassador
+- index 
+  - ~~アンバサダーを取得する~~
 
 ## admin
 

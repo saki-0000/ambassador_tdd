@@ -30,4 +30,32 @@ class UserFactory extends Factory
             'is_admin' => $this->faker->randomElement([0, 1]),
         ];
     }
+
+    /**
+     * ユーザーがアドミンであることを示す
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => 1,
+            ];
+        });
+    }
+
+    /**
+     * ユーザーがアドミンであることを示す
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function ambassador()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_admin' => 0,
+            ];
+        });
+    }
 }
