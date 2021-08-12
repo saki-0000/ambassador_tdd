@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateInfoRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,5 +66,19 @@ class AuthController extends Controller
     {
         Cookie::forget('jwt');
         return;
+    }
+
+    /**
+     * 与えられた情報をもとにログインします。
+     *
+     * @param RegisterRequest $request
+     * @return void
+     */
+    public function updateInfo(UpdateInfoRequest $request)
+    {
+        $user = $request->user();
+        $user->update($request->only('first_name', 'last_name', 'email'));
+
+        return $user;
     }
 }
