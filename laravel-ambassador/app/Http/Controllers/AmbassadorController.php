@@ -9,6 +9,6 @@ class AmbassadorController extends Controller
 {
     public function index()
     {
-        return User::whereIsAdmin(0)->get();
+        return User::ambassador()->get();
     }
 }

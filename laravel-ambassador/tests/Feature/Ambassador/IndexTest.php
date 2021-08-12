@@ -35,7 +35,7 @@ class IndexTest extends TestCase
                         $json->where('first_name', $users->first()->first_name)
                             ->where('last_name', $users->first()->last_name)
                             ->where('email', $users->first()->email)
-                            ->where('is_admin', $users->first()->is_admin)
+                            ->where('is_admin', 0)
                             ->missing('password')
                             ->etc()
                     )
