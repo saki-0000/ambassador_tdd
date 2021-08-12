@@ -26,9 +26,6 @@ class AdminITest extends TestCase
         ]) + ['password_confirm' => $user->password]);
         $response->assertStatus(201);
 
-        $userModel = User::firstWhere('email', $user->email);
-        dump($userModel);
-
         // ログイン前なので認証エラー
         $response = $this->getJson('/api/admin/user');
         $response->assertStatus(401);
@@ -39,7 +36,6 @@ class AdminITest extends TestCase
         ]);
         $response->assertOk();
 
-        dump($userModel->fresh()->tokens);
 
         $response = $this->getJson('/api/admin/user');
         $response->assertOk();

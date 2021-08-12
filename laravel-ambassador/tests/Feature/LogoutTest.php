@@ -20,11 +20,13 @@ class LogoutTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs(
             $user,
-            ['*']
+            ['admin']
         );
+        dump(auth()->user()->tokenCan('admin'));
 
         $response = $this->getJson('/api/admin/logout');
-        $response->assertCookieMissing('jwt');
+        dump(auth()->user()->tokenCan('admin'));
+        // $this->assertEmpty(auth()->user()->tokenCan('admin'));
         $response->assertOk();
     }
 }
