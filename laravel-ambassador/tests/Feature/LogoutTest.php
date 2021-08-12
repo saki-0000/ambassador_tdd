@@ -22,10 +22,8 @@ class LogoutTest extends TestCase
             $user,
             ['admin']
         );
-        dump(auth()->user()->tokenCan('admin'));
 
         $response = $this->getJson('/api/admin/logout');
-        dump(auth()->user()->tokenCan('admin'));
         // $this->assertEmpty(auth()->user()->tokenCan('admin'));
         $response->assertOk();
     }
