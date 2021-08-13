@@ -12,5 +12,7 @@
   - ~~アンバサダーを取得する~~
 - productsのCRUD
   - ~~CRUDできる~~
+- linkのshow
+  - linkの詳細を取得する
 
 ## checkout
