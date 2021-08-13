@@ -37,6 +37,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
  * @method static Builder|User ambassador()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Link[] $links
+ * @property-read int|null $links_count
  */
 class User extends Authenticatable
 {

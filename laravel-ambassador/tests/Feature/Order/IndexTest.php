@@ -3,6 +3,7 @@
 namespace Tests\Feature\Order;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -18,7 +19,9 @@ class IndexTest extends TestCase
      */
     public function test_オーダーを全て取得できること。()
     {
-        Order::factory()->count(5)->hasOrderItems(3)->create();
+        // 本当はもっと具体的なデータを作成してテストしたほうがいい？
+        $orders = Order::factory()->count(5)->hasOrderItems(3)->create();
+        $totalRevenue = $orders->first()->orderItems->sum(fn (OrderItem $item) => $item->adminRevenue);
         $user = User::factory()->admin()->create();
         Sanctum::actingAs(
             $user,
@@ -31,14 +34,15 @@ class IndexTest extends TestCase
             ->assertJson(
                 fn (AssertableJson $json) =>
                 $json->has(5)
-                // ->first(
-                //     fn ($json) =>
-                //     $json->where('title', $products->first()->title)
-                //         ->where('description', $products->first()->description)
-                //         ->where('image', $products->first()->image)
-                //         ->where('price', $products->first()->price)
-                //         ->etc()
-                // )
+                    ->first(
+                        fn ($json) =>
+                        $json->where('id', $orders->first()->id)
+                            ->where('name', $orders->first()->name)
+                            ->where('email', $orders->first()->email)
+                            ->where('total', $totalRevenue)
+                            ->where('order_items', $orders->first()->orderItems)
+                            ->etc()
+                    )
             );
     }
 }
