@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AmbassadorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +29,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/logout', [AuthController::class, 'logout']);
         Route::post('/users/info', [AuthController::class, 'updateInfo']);
         Route::post('/users/password', [AuthController::class, 'updatePassword']);
+
+        Route::get('/users/{user}/links', [LinkController::class, 'index']);
         Route::get('/ambassadors', [AmbassadorController::class, 'index']);
+
         Route::apiResource('products', ProductController::class);
     });
 });

@@ -13,6 +13,6 @@
 - productsのCRUD
   - ~~CRUDできる~~
 - linkのindex
-  - あるユーザーに紐づくlinkを全て取得できること。
+  - ~~あるユーザーに紐づくlinkを全て取得できること。~~
 
 ## checkout
