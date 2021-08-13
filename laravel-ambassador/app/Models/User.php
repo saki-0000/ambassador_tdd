@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $builder->whereIsAdmin(0);
     }
+
+    public function links()
+    {
+        return $this->hasMany(Link::class);
+    }
 }
