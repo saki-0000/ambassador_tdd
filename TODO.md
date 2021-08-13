@@ -11,6 +11,6 @@
 - get ambassadors
   - ~~アンバサダーを取得する~~
 - productsのCRUD
-  - CRUDできる
+  - ~~CRUDできる~~
 
 ## checkout
