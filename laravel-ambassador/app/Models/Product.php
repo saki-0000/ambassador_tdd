@@ -32,4 +32,6 @@ class Product extends Model
     use HasFactory;
 
     protected $casts = ['price' => 'float'];
+
+    protected $guarded = [];
 }
