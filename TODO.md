@@ -14,5 +14,7 @@
   - ~~CRUDできる~~
 - linkのindex
   - ~~あるユーザーに紐づくlinkを全て取得できること。~~
+- orderのindex
+  - すべてのオーダーを取得する。
 
 ## checkout
