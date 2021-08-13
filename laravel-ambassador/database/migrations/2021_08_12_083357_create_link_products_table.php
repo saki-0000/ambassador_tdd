@@ -5,7 +5,7 @@
     use Illuminate\Database\Schema\Blueprint;
     use Illuminate\Database\Migrations\Migration;
 
-    class CreateLinksTable extends Migration
+    class CreateLinkProductsTable extends Migration
     {
         /**
          * Run the migrations.
@@ -14,13 +14,14 @@
          */
         public function up()
         {
-            Schema::create("links", function (Blueprint $table) {
-                $table->id();
-                $table->string('code')->unique();
-                $table->unsignedBigInteger('user_id');
-                $table->timestamps();
+            Schema::create("link_products", function (Blueprint $table) {
 
-                $table->foreign("user_id")->references("id")->on("users");
+                $table->id();
+                $table->unsignedBigInteger('link_id');
+                $table->unsignedBigInteger('product_id');
+
+                $table->foreign("link_id")->references("id")->on("links");
+                $table->foreign("product_id")->references("id")->on("products");
             });
         }
 
@@ -31,6 +32,6 @@
          */
         public function down()
         {
-            Schema::dropIfExists("links");
+            Schema::dropIfExists("link_products");
         }
     }

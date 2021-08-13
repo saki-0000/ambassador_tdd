@@ -16,24 +16,12 @@
         {
             Schema::create("products", function (Blueprint $table) {
 
-                $table->increments('id');
+                $table->id();
                 $table->string('title');
                 $table->text('description')->nullable();
                 $table->string('image');
                 $table->decimal('price');
                 $table->timestamps();
-
-
-
-                // ----------------------------------------------------
-                // -- SELECT [products]--
-                // ----------------------------------------------------
-                // $query = DB::table("products")
-                // ->get();
-                // dd($query); //For checking
-
-
-
             });
         }
 
