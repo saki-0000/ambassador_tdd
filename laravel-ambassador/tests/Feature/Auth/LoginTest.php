@@ -14,9 +14,9 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function test_ログイン()
+    public function test_アドミンログイン()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $response = $this->postJson('/api/admin/login', [
             'email' => $user->email,
@@ -31,6 +31,21 @@ class LoginTest extends TestCase
 
         // TODO：Bearerトークンがセットされるかどうかのテストの方法がわからない
         // $response->assertHeader('Authorization');
+    }
+    public function test_アンバサダーログイン()
+    {
+        $user = User::factory()->ambassador()->create();
+
+        $response = $this->postJson('/api/ambassador/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+        $response->assertOk();
+
+        $userModel = User::firstWhere('email', $user->email);
+        $this->assertTrue($userModel->tokens->first()->abilities[0] === 'ambassador');
+
+        $response->assertCookie('jwt');
     }
     /**
      *

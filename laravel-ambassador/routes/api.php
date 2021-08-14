@@ -19,6 +19,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+if (!function_exists('common')) {
+    function common(String $scope)
+    {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::middleware(['auth:sanctum', $scope])->group(function () {
+            Route::get('/user', [AuthController::class, 'user']);
+            Route::get('/logout', [AuthController::class, 'logout']);
+            Route::post('/users/info', [AuthController::class, 'updateInfo']);
+            Route::post('/users/password', [AuthController::class, 'updatePassword']);
+        });
+    }
+}
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -37,4 +51,7 @@ Route::prefix('admin')->group(function () {
 
         Route::apiResource('products', ProductController::class);
     });
+});
+Route::prefix('ambassador')->group(function () {
+    common('scope.ambassador');
 });

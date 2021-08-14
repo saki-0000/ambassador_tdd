@@ -15,12 +15,12 @@ class userTest extends TestCase
      *
      * @return void
      */
-    public function test_認証済みユーザーの情報が返ってくる()
+    public function test_認証済みadminユーザーの情報が返ってくる()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
         Sanctum::actingAs(
             $user,
-            ['*']
+            ['admin']
         );
 
         $response = $this->getJson('/api/admin/user');
@@ -32,8 +32,26 @@ class userTest extends TestCase
                 $json->where('first_name', $user->first_name)
                     ->where('last_name', $user->last_name)
                     ->where('email', $user->email)
-                    ->where('is_admin', $user->is_admin)
+                    ->where('is_admin', 1)
                     ->missing('password')
+                    ->etc()
+            );
+    }
+    public function test_認証済みambassadorユーザーの情報が返ってくる()
+    {
+        $user = User::factory()->ambassador()->create();
+        Sanctum::actingAs(
+            $user,
+            ['ambassador']
+        );
+
+        $response = $this->getJson('/api/ambassador/user');
+
+        $response->assertOk();
+        $response
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->where('is_admin', 0)
                     ->etc()
             );
     }

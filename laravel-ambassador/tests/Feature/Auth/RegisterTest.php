@@ -14,7 +14,7 @@ class AdminTest extends TestCase
      * パスワードはログインしてみないと分からないので結合にて
      * @return void
      */
-    public function test_登録したユーザーが返却されること()
+    public function test_登録したアドミンユーザーが返却されること()
     {
         // $user = User::factory()->make();
         $response = $this->postJson('/api/admin/register', [
@@ -32,6 +32,29 @@ class AdminTest extends TestCase
                     ->where('email', 'test@test.com')
                     ->where('is_admin', 1)
                     ->missing('password')
+                    ->etc()
+            );
+        $response->assertStatus(201);
+    }
+
+    /**
+     * パスワードはログインしてみないと分からないので結合にて
+     * @return void
+     */
+    public function test_登録したアンバサダーユーザーが返却されること()
+    {
+        // $user = User::factory()->make();
+        $response = $this->postJson('/api/ambassador/register', [
+            'first_name' => 'a',
+            'last_name' => 'a',
+            'email' => 'test@test.com',
+            'password' => 'a',
+            'password_confirm' => 'a',
+        ]);
+        $response
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->where('is_admin', 0)
                     ->etc()
             );
         $response->assertStatus(201);

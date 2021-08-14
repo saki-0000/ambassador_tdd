@@ -15,7 +15,7 @@ class LogoutTest extends TestCase
      *
      * @return void
      */
-    public function test_認証済みユーザーのがそうでなくなる()
+    public function test_認証済みアドミンユーザーのがそうでなくなる()
     {
         $user = User::factory()->create();
         Sanctum::actingAs(
@@ -24,6 +24,19 @@ class LogoutTest extends TestCase
         );
 
         $response = $this->getJson('/api/admin/logout');
+        // $this->assertEmpty(auth()->user()->tokenCan('admin'));
+        $response->assertOk();
+    }
+
+    public function test_認証済みアンバサダーユーザーのがそうでなくなる()
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs(
+            $user,
+            ['ambassador']
+        );
+
+        $response = $this->getJson('/api/ambassador/logout');
         // $this->assertEmpty(auth()->user()->tokenCan('admin'));
         $response->assertOk();
     }
