@@ -62,4 +62,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Link::class);
     }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function getRevenueAttribute()
+    {
+        return $this->order->sum(fn (Order $order) => $order->ambassadorRevenue);
+    }
 }

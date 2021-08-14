@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateInfoRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,20 +51,19 @@ class AuthController extends Controller
     }
 
     /**
-     * 与えられた情報をもとにログインします。
+     * ユーザーの情報を返却します。
      *
-     * @param RegisterRequest $request
+     * @param Request $request
      * @return void
      */
-    public function user()
+    public function user(Request $request)
     {
-        return auth()->user();
+        return new UserResource($request->user());
     }
 
     /**
      * ログアウトします。
      *
-     * @param RegisterRequest $request
      * @return void
      */
     public function logout()

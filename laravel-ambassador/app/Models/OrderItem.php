@@ -49,4 +49,9 @@ class OrderItem extends Model
     {
         return $this->product->price * 0.9;
     }
+
+    public function getAmbassadorRevenueAttribute()
+    {
+        return $this->product->price * 0.1;
+    }
 }

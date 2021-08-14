@@ -29,10 +29,8 @@ class userTest extends TestCase
         $response
             ->assertJson(
                 fn (AssertableJson $json) =>
-                $json->where('first_name', $user->first_name)
-                    ->where('last_name', $user->last_name)
+                $json->where('name', $user->name)
                     ->where('email', $user->email)
-                    ->where('is_admin', 1)
                     ->missing('password')
                     ->etc()
             );
@@ -51,7 +49,9 @@ class userTest extends TestCase
         $response
             ->assertJson(
                 fn (AssertableJson $json) =>
-                $json->where('is_admin', 0)
+                $json->where('name', $user->name)
+                    ->where('email', $user->email)
+                    ->where('revenue', $user->revenue)
                     ->etc()
             );
     }
