@@ -37,14 +37,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('admin')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
+    common('scope.admin');
     Route::middleware(['auth:sanctum', 'scope.admin'])->group(function () {
-        Route::get('/user', [AuthController::class, 'user']);
-        Route::get('/logout', [AuthController::class, 'logout']);
-        Route::post('/users/info', [AuthController::class, 'updateInfo']);
-        Route::post('/users/password', [AuthController::class, 'updatePassword']);
-
         Route::get('/users/{user}/links', [LinkController::class, 'index']);
         Route::get('/ambassadors', [AmbassadorController::class, 'index']);
         Route::get('/orders', [OrderController::class, 'index']);
