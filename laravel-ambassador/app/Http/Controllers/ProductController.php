@@ -76,10 +76,18 @@ class ProductController extends Controller
     }
     public function frontend()
     {
-        return Product::all();
+        if ($products = \Cache::get('products_frontend')) {
+            return $products;
+        }
+        $products = Product::all();
+        \Cache::set('products_frontend', $products, 30 * 60);
+        return $products;
     }
     public function backend()
     {
-        return Product::paginate();
+        $products = \Cache::remember('products_frontend', 30 * 60, function () {
+            return Product::paginate();
+        });
+        return $products;
     }
 }
