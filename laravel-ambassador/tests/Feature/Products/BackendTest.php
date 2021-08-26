@@ -18,8 +18,19 @@ class BackendTest extends TestCase
      */
     public function test_プロダクトを全て取得できること。()
     {
-        $count = 5;
-        $products = Product::factory()->count($count)->create();
+        $count = 3;
+        $products = Product::factory()->create([
+            'title' => 'aaa',
+            'description' => 'ddd',
+        ]);
+        $products2 = Product::factory()->create([
+            'title' => 'bbb',
+            'description' => 'eee',
+        ]);
+        $products3 = Product::factory()->create([
+            'title' => 'ccc',
+            'description' => 'fff',
+        ]);
 
         $user = User::factory()->ambassador()->create();
         Sanctum::actingAs(
@@ -51,6 +62,38 @@ class BackendTest extends TestCase
                             // ->where('price', $products->first()->price)
                             ->etc()
                     )
+            );
+        $response = $this->call('GET', '/api/ambassador/products/backend', ['s' => 'aaa']);
+        $response->assertOk();
+        $response
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->has(
+                    "data",
+                    1,
+                    fn ($json) =>
+                    $json->where('title', $products->first()->title)
+                        ->where('description', $products->first()->description)
+                        ->where('image', $products->first()->image)
+                        ->etc()
+                )
+                    ->etc()
+            );
+        $response = $this->call('GET', '/api/ambassador/products/backend', ['s' => 'ddd']);
+        $response->assertOk();
+        $response
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->has(
+                    "data",
+                    1,
+                    fn ($json) =>
+                    $json->where('title', $products->first()->title)
+                        ->where('description', $products->first()->description)
+                        ->where('image', $products->first()->image)
+                        ->etc()
+                )
+                    ->etc()
             );
     }
 }

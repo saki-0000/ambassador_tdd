@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -91,6 +92,12 @@ class ProductController extends Controller
             30 * 60,
             fn () => Product::all()
         );
+
+        if ($s = $request->input('s')) {
+            $products = $products->filter(
+                fn (Product $product) => Str::contains($product->title, $s) || Str::contains($product->description, $s)
+            );
+        }
         $total = $products->count();
 
         return [
