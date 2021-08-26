@@ -100,6 +100,14 @@ class ProductController extends Controller
         }
         $total = $products->count();
 
+        $sort = $request->input('sort');
+        if ($sort === 'asc') {
+            $products = $products->sortBy('price');
+        }
+        if ($sort === 'desc') {
+            $products = $products->sortByDesc('price');
+        }
+
         return [
             'data' => $products->forPage($page, 9)->values(),
             'meta' => [

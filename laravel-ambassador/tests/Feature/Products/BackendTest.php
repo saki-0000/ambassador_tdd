@@ -22,14 +22,17 @@ class BackendTest extends TestCase
         $products = Product::factory()->create([
             'title' => 'aaa',
             'description' => 'ddd',
+            'price' => 150,
         ]);
         $products2 = Product::factory()->create([
             'title' => 'bbb',
             'description' => 'eee',
+            'price' => 100,
         ]);
         $products3 = Product::factory()->create([
             'title' => 'ccc',
             'description' => 'fff',
+            'price' => 220,
         ]);
 
         $user = User::factory()->ambassador()->create();
@@ -91,6 +94,53 @@ class BackendTest extends TestCase
                     $json->where('title', $products->first()->title)
                         ->where('description', $products->first()->description)
                         ->where('image', $products->first()->image)
+                        ->etc()
+                )
+                    ->etc()
+            );
+
+        $response = $this->call('GET', '/api/ambassador/products/backend', ['sort' => 'asc']);
+        $response->assertOk();
+        $response
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->has(
+                    "data.0",
+                    fn ($json) =>
+                    $json->where('title', 'bbb')
+                        ->etc()
+                )->has(
+                    "data.1",
+                    fn ($json) =>
+                    $json->where('title', 'aaa')
+                        ->etc()
+                )->has(
+                    "data.2",
+                    fn ($json) =>
+                    $json->where('title', 'ccc')
+                        ->etc()
+                )
+                    ->etc()
+            );
+        $response = $this->call('GET', '/api/ambassador/products/backend', ['sort' => 'desc']);
+        $response->assertOk();
+        $response
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->has(
+                    "data.0",
+                    fn ($json) =>
+                    $json->where('title', 'ccc')
+                        ->etc()
+                )->has(
+                    "data.1",
+                    fn ($json) =>
+                    $json->where('title', 'aaa')
+                        ->etc()
+                )->has(
+                    "data.2",
+                    fn ($json) =>
+                    $json->where('title', 'bbb')
                         ->etc()
                 )
                     ->etc()
