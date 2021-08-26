@@ -83,11 +83,23 @@ class ProductController extends Controller
         \Cache::set('products_frontend', $products, 30 * 60);
         return $products;
     }
-    public function backend()
+    public function backend(Request $request)
     {
-        $products = \Cache::remember('products_frontend', 30 * 60, function () {
-            return Product::paginate();
-        });
-        return $products;
+        $page = $request->input('page', 1);
+        $products = \Cache::remember(
+            'products_backend',
+            30 * 60,
+            fn () => Product::all()
+        );
+        $total = $products->count();
+
+        return [
+            'data' => $products->forPage($page, 9)->values(),
+            'meta' => [
+                'total' => $total,
+                'page' => $page,
+                'last_page' => ceil($total / 9),
+            ]
+        ];
     }
 }

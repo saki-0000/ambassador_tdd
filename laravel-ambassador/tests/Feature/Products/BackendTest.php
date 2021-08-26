@@ -18,7 +18,8 @@ class BackendTest extends TestCase
      */
     public function test_プロダクトを全て取得できること。()
     {
-        $products = Product::factory()->count(5)->create();
+        $count = 5;
+        $products = Product::factory()->count($count)->create();
 
         $user = User::factory()->ambassador()->create();
         Sanctum::actingAs(
@@ -31,20 +32,17 @@ class BackendTest extends TestCase
         $response
             ->assertJson(
                 fn (AssertableJson $json) =>
-                $json->has("total",)
-                    ->has("per_page")
-                    ->has("current_page")
-                    ->has("last_page")
-                    ->has("first_page_url")
-                    ->has("last_page_url")
-                    ->has("next_page_url")
-                    ->has("prev_page_url")
-                    ->has("path")
-                    ->has("from")
-                    ->has("to")
+                $json->has(
+                    "meta",
+                    null,
+                    fn ($json) =>
+                    $json->where("total", $count)
+                        ->where("page", 1)
+                        ->where("last_page", 1)
+                )
                     ->has(
                         "data",
-                        5,
+                        $count,
                         fn ($json) =>
                         $json->where('title', $products->first()->title)
                             ->where('description', $products->first()->description)
@@ -53,7 +51,6 @@ class BackendTest extends TestCase
                             // ->where('price', $products->first()->price)
                             ->etc()
                     )
-                    ->has("links")
             );
     }
 }
