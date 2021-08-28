@@ -1,0 +1,15 @@
+@startuml
+class users
+class links
+class products
+class link_products
+class orders
+class order_Items
+
+links}o..||users
+links}o..||link_products
+link_products||..o{products
+
+orders}o..||users
+orders}o..|{order_Items
+@enduml
