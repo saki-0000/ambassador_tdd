@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\StatsResource;
 use App\Models\Link;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StatsController extends Controller
@@ -21,5 +22,19 @@ class StatsController extends Controller
                 'revenue' => $orders->sum(fn (Order $order) => $order->ambassadorRevenue)
             ];
         });
+    }
+
+    public function rankings()
+    {
+        $ambassador = User::ambassador()->get();
+        $rankings = $ambassador->map(
+            fn (User $user) =>
+            [
+                'name' => $user->name,
+                'revenue' => $user->revenue,
+            ]
+        );
+
+        return $rankings->sortByDesc('revenue')->values();
     }
 }

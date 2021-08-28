@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read mixed $admin_revenue
  * @property-read \App\Models\Product $product
+ * @property-read mixed $ambassador_revenue
  */
 class OrderItem extends Model
 {

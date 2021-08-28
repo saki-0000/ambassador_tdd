@@ -45,6 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read mixed $admin_revenue
  * @property-read mixed $name
+ * @property-read mixed $ambassador_revenue
  */
 class Order extends Model
 {

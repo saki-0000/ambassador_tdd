@@ -39,6 +39,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|User ambassador()
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Link[] $links
  * @property-read int|null $links_count
+ * @property-read mixed $revenue
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $order
+ * @property-read int|null $order_count
  */
 class User extends Authenticatable
 {
@@ -66,6 +69,11 @@ class User extends Authenticatable
     public function order()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function getRevenueAttribute()
